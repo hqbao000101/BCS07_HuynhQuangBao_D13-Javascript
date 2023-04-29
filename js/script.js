@@ -1,12 +1,14 @@
-// BT1: Tính tiền lương nhân viên
+// ! BT1: Tính tiền lương nhân viên
 /*
   input: lương 1 ngày (100.000), số ngày làm (người dùng nhập vào)
   xử lý:
     - Lấy giá trị lương 1 ngày từ form - 100.000
     - Người dùng nhập vào số ngày làm trong form
     - Người dùng nhấn submit thì sẽ lấy giá trị số ngày người dùng vừa nhập ở trên
-    - Tính lương nhân viên theo công thức:
-      Lương nhân viên = lương 1 ngày * số ngày làm
+    - Kiểm tra số ngày người dùng vừa nhập xem có phải là số >= 0
+      + Đúng: Tính lương nhân viên theo công thức:
+        Lương nhân viên = lương 1 ngày * số ngày làm
+      + Sai: Thông báo để người dùng nhập lại
   output: Lương nhân viên
 */
 
@@ -15,15 +17,20 @@ document
   .querySelector(".ex1 form button")
   .addEventListener("click", function () {
     var workingDay = document.getElementById("day").value;
-    var result = salaryPerDay * workingDay;
-    var formatResult = result.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-    document.querySelector(".ex1 form #footer1 span").innerHTML = formatResult;
+    if (workingDay >= 0) {
+      var result = salaryPerDay * workingDay;
+      var formatResult = result.toLocaleString("vi-VN", {
+        style: "currency",
+        currency: "VND",
+      });
+      document.querySelector(".ex1 form #footer1 span").innerHTML =
+        formatResult;
+    } else {
+      alert("BT1 - Số ngày bạn vừa nhập không hợp lệ");
+    }
   });
 
-// BT2: Tính giá trị trung bình
+// ! BT2: Tính giá trị trung bình
 /*
   input: 5 số thực (người dùng nhập vào)
   xử lý:
@@ -45,52 +52,64 @@ document.getElementById("average").onclick = function () {
   document.querySelector(".ex2 form #footer2 span").innerHTML = result;
 };
 
-// BT3: Quy đổi tiền
+// ! BT3: Quy đổi tiền
 /*
   input: giá USD hiện nay, số tiền USD 
   xử lý:
     - Người dùng nhập vào  số đô muốn đổi
     - Người dùng nhấn "exchange"
     - Lấy số đô người dùng vừa nhập
-    - Quy đổi qua VND theo công thức:
+    - Kiểm tra xem số vừa nhập có phải là số >= 0
+      + Đúng: Quy đổi qua VND theo công thức:
       Tiền Việt = tiền Đô * giá USD hiện nay
+      + Sai: Thông báo để người dùng nhập lại
   output: số tiền Việt được quy đổi
 */
 
 const usdToVND = 23500;
 document.getElementById("toVND").onclick = function () {
   var numberUSD = document.getElementById("usd").value;
-  var result = numberUSD * usdToVND;
-  var formatResult = result.toLocaleString("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
-  document.querySelector(".ex3 form #footer3 span").innerHTML = formatResult;
+  if (numberUSD >= 0) {
+    var result = numberUSD * usdToVND;
+    var formatResult = result.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    document.querySelector(".ex3 form #footer3 span").innerHTML = formatResult;
+  } else {
+    alert("BT3 - Số bạn vừa nhập không hợp lệ");
+  }
 };
 
-// BT4: Tính chu vi và diện tích của hình chữ nhật
+// ! BT4: Tính chu vi và diện tích của hình chữ nhật
 /*
   input: chiều dài, chiều rộng (người dùng nhập vào)
   xử lý:
     - Người dùng nhập vào chiều dài và chiều rộng
     - Người dùng nhấn "Calculate"
     - Lấy giá trị chiều dài và chiều rộng người dùng vừa nhập
-    - Tính chu vi và diện tích tương ứng:
-      chu vi = (dài + rộng)*2
-      diện tích = (dài * rộng)
+    - Kiểm tra giá trị người dùng vừa nhập vào (chiều dài và chiều rộng phải là số lớn hơn 0)
+      + Sai: Thông báo để người dùng nhập lại
+      + Đúng: Tính chu vi và diện tích tương ứng:
+        chu vi = (dài + rộng)*2
+        diện tích = (dài * rộng)
   output: chu vi và diện tích tương ứng của hình chữ nhật
 */
 
 document.getElementById("rectangle").onclick = function () {
   var width = document.getElementById("width").value * 1;
   var height = document.getElementById("height").value * 1;
-  var perimeter = (width + height) * 2;
-  var acreage = width * height;
-  document.querySelector(".ex4 form #perimeter span").innerHTML = perimeter;
-  document.querySelector(".ex4 form #acreage span").innerHTML = acreage;
+  if (width > 0 && height > 0) {
+    var perimeter = (width + height) * 2;
+    var acreage = width * height;
+    document.querySelector(".ex4 form #perimeter span").innerHTML = perimeter;
+    document.querySelector(".ex4 form #acreage span").innerHTML = acreage;
+  } else {
+    alert("BT4 - Giá trị bạn vừa nhập không hợp lệ");
+  }
 };
 
-// BT5: Tính tổng 2 ký số
+// ! BT5: Tính tổng 2 ký số
 /*
   input: 1 số có 2 chữ số (Người dùng nhập vào)
   xử lý:
